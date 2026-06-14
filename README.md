@@ -3,7 +3,7 @@
 Go client SDK for `pay233-server`.
 
 ```go
-client := pay233.NewClient("http://localhost:8080", "dev-secret")
+client := pay233.NewClient("http://localhost:5500", "dev-secret")
 payment, err := client.CreatePayment(ctx, pay233.CreatePaymentRequest{
     MerchantID: "merchant_1",
     OutTradeNo: "order_10001",
