@@ -7,6 +7,13 @@ type Money struct {
 	Amount   int64  `json:"amount"`
 }
 
+type EnvType string
+
+const (
+	EnvTypeTest    EnvType = "test"
+	EnvTypeRelease EnvType = "release"
+)
+
 type PaymentStatus string
 
 const (
@@ -30,6 +37,7 @@ const (
 )
 
 type CreatePaymentRequest struct {
+	EnvType    EnvType           `json:"envType"`
 	MerchantID string            `json:"merchant_id"`
 	OutTradeNo string            `json:"out_trade_no"`
 	Channel    string            `json:"channel"`
@@ -41,6 +49,7 @@ type CreatePaymentRequest struct {
 
 type Payment struct {
 	ID               string            `json:"id"`
+	EnvType          EnvType           `json:"env_type"`
 	MerchantID       string            `json:"merchant_id"`
 	OutTradeNo       string            `json:"out_trade_no"`
 	Channel          string            `json:"channel"`

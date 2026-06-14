@@ -19,12 +19,20 @@ func TestClientSignsCreatePayment(t *testing.T) {
 		if r.Header.Get(headerSignature) == "" {
 			t.Fatal("missing signature")
 		}
+		body, err := io.ReadAll(r.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !strings.Contains(string(body), `"envType":"test"`) {
+			t.Fatalf("missing envType in request body: %s", body)
+		}
 		_ = json.NewEncoder(w).Encode(Payment{ID: "pay_1", Status: StatusPending})
 	}))
 	defer server.Close()
 
 	client := NewClient(server.URL, "secret")
 	got, err := client.CreatePayment(context.Background(), CreatePaymentRequest{
+		EnvType:    EnvTypeTest,
 		MerchantID: "m1",
 		OutTradeNo: "o1",
 		Channel:    "mock",
